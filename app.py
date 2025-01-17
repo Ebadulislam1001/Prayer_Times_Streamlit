@@ -21,7 +21,7 @@ for datum in data:
     timings.append(datum.text)
 timings.pop(0)
 
-data = {'eventName': ['Fajr', 'Sunrise','Zuhr', 'Asr', 'Maghrib', 'Isha'], 'eventTime': timings}
+data = {'Event Name': ['Fajr', 'Sunrise','Zuhr', 'Asr', 'Maghrib', 'Isha'], 'Start Time': timings}
 df = pd.DataFrame(data)
 
 st.write("Today's namaz timings:")
@@ -36,26 +36,27 @@ data = list(csv.reader(response.text.splitlines()))
 data = data[1]
 data = data[52:]
 table = []
-colNames = ['index', 'index_f', 'name', 'area', 'latitude', 'latitude_f', 'longitude', 'longitude_f', 'jumuah', 'fajr', 'zuhr', 'asr', 'maghrib', 'isha']
+colNames = ['index', 'index_f', 'Masjid', 'area', 'latitude', 'latitude_f', 'longitude', 'longitude_f', 'Jumuah', 'Fajr', 'Zuhr', 'Asr', 'Maghrib', 'Isha']
 for row in range(6):
     table_row = {}
     for col in range(len(colNames)):
         table_row[colNames[col]] = data[row*len(colNames) + col]
     table_row.pop('index')
     table_row.pop('index_f')
-    table_row['name'] = table_row['name'][6:-2]
+    table_row['Masjid'] = table_row['Masjid'][6:-2]
     table_row.pop('area')
     table_row.pop('latitude')
     table_row.pop('latitude_f')
     table_row.pop('longitude')
     table_row.pop('longitude_f')
-    table_row['jumuah'] = table_row['jumuah'][6:-2]
-    table_row['fajr'] = table_row['fajr'][6:-2]
-    table_row['zuhr'] = table_row['zuhr'][6:-2]
-    table_row['asr'] = table_row['asr'][6:-2]
-    table_row['maghrib'] = table_row['maghrib'][6:-2]
-    table_row['isha'] = table_row['isha'][6:-4]
+    table_row['Jumuah'] = table_row['Jumuah'][6:-2]
+    table_row['Fajr'] = table_row['Fajr'][6:-2]
+    table_row['Zuhr'] = table_row['Zuhr'][6:-2]
+    table_row['Asr'] = table_row['Asr'][6:-2]
+    table_row['Maghrib'] = table_row['Maghrib'][6:-2]
+    table_row['Isha'] = table_row['Isha'][6:-4]
     table.append(table_row)
+table[-1]['Isha'] = table[-1]['Isha'][:-1]
 df = pd.DataFrame(table)
 
 st.write("Jamaat timings in nearby masajid:")
